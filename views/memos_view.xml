@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tree_memos" model="ir.ui.view">
+      <field name="name">Lista de Memorandums</field>
+      <field name="model">memos.memorandums</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <tree decoration-success="state == 'aprobado'" decoration-danger="state == 'emitido'" decoration-warning="state == 'borrador'">
+          <field name="id" string="Id"/>
+          <field name="de" string="De"/>
+          <field name="para" string="Para"/>
+          <field name="fecha" string="Fecha"/>
+          <field name="fecha_ap" string="Aprobación"/>
+          <field name="name" string="Asunto"/>
+          <field name="id_oc" string="Id OC"/>
+          <field name="id_solicitud" string="Solicitud"/>
+          <field name="state" string="Estado"/>
+        </tree>
+      </field>
+    </record>
+
+    
+    <record id="view_form_memos" model="ir.ui.view">
+      <field name="name">Formulario de Memorandums</field>
+      <field name="model">memos.memorandums</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="button_emitido" string="Emitido" states="borrador" class="oe_highlight" type="object"/>
+            <button name="button_aprobado" string="Aprobado" states="emitido" class="oe_highlight" type="object"/>
+            <button name="button_borrador" string="Borrador" states="emitido" type="object"/>
+            <field name="state" widget="statusbar" clickable="True" statusbar_visible="borrador,emitido,aprobado"/>
+          </header>
+          <sheet>
+            <h2>Formulario Memorandums</h2>
+            <group name="group_top">
+            <group name="group_left">
+              <field name="id_oc" string="Id Orden de Compra"/>
+              <field name="de" string="De"/>
+              <field name="para" string="Para"/>
+              <field name="name" string="Asunto"/>
+              <field name="fecha" string="Fecha"/>
+              <field name="id_project" string="Proyecto"/>
+            </group>
+            <group name="group_right">
+              <field name="fecha_ap" string="Fecha Aprobación"/>
+              <field name="id_solicitud" string="Id Solicitud Memo"/>
+              <!--<field name="id_oc" string="Id OC"/>-->
+            </group>
+            </group>  
+            <group>
+              <field name="texto" string="Descripción"/>
+              <!--<field name="id_oc" string="Id OC"/>-->
+            </group> 
+              <!--<field name="activo" string="Activo"/>-->
+            <group>
+              <field name="items" string="Items"/>
+            </group>
+            <group>
+              <field name="anotacion" string="Anotaciones"/>
+            </group>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <menuitem id="menu_memos" name="Memorandums" action=""
+        icon="memorandum,static/description/icon.png"
+        web_icon="memorandum,static/description/icon.png"
+    
+    />
+    <!-- Second level menu items -->
+    <menuitem id="menu_memorandums_config"
+        name="Memorandums"
+        sequence="100"
+        parent="menu_memos"
+        groups="group_memorandum_user" 
+    />
+
+    <record id="action_memos" model="ir.actions.act_window">
+        <field name="name">Accion de Memorandums</field>
+        <field name="res_model">memos.memorandums</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!--Filtra memorandums solo de o para el usurio logueado -->
+        <field name="domain">['|',('de','=',uid),('para','=',uid)]</field>
+        
+    </record>
+    <menuitem id="menu_memorandums_view"
+        name="Memorandums"
+        sequence="10"
+        parent="menu_memorandums_config"
+        action="action_memos"
+    />
+  </data>
+</odoo>

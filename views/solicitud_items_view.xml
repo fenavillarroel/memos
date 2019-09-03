@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tree_items_solicitudes" model="ir.ui.view">
+      <field name="name">Lista de Items Solicitudes</field>
+      <field name="model">solicitud.items</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+
+          <tree>
+            <field name="name" string="Nombre Producto o Servicio"/>
+            <field name="cantidad" string="Cantidad"/>
+            <field name="id_convenio" string="Id convenio Marco"/>
+            <field name="descripcion" string="Descripcion"/>
+            <field name="precio" string="Precio"/>
+            <!--<field name="id_memo" string="Id memorandum"/>-->
+          </tree>
+
+      </field>
+    </record>
+
+    <record id="view_form_items_solicitudes" model="ir.ui.view">
+      <field name="name">Formulario de Items Solicitudes</field>
+      <field name="model">solicitud.items</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+              <h2>Formulario Items Solicitudes</h2>
+              <group>
+                <field name="name" string="Nombre Producto o Servicio"/>
+                <field name="cantidad" string="Cantidad"/>
+                <field name="id_convenio" string="Id convenio Marco"/>
+                <field name="descripcion" string="Descripcion"/>
+                <field name="precio" string="Precio"/>
+                <!--<field name="id_memo" string="Id memorandum"/>-->
+              </group>
+          </sheet>  
+        </form>
+      </field>
+    </record>
+    <!--
+    <record id="action_items_memos" model="ir.actions.act_window">
+        <field name="name">Accion de Items de Memorandums</field>
+        <field name="res_model">memos.items</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_items_memos" name="Items Memorandums" action="action_items_memos"/>
+    -->
+  </data>
+</odoo>

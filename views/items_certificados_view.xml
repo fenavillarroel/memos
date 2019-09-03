@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tree_items_certificados" model="ir.ui.view">
+      <field name="name">Lista de Items Certificados</field>
+      <field name="model">certificado.items</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+
+          <tree>
+            <field name="name" string="Referencia"/>
+            <field name="descripcion" string="Descripción Técnica"/>
+            <field name="precio" string="Precio"/>
+            <field name="cantidad" string="Cantidad"/>
+          </tree>
+
+      </field>
+    </record>
+
+    <record id="view_form_items_certificados" model="ir.ui.view">
+      <field name="name">Formulario de Items Certificados</field>
+      <field name="model">certificado.items</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+              <h2>Formulario Items Certificados</h2>
+              <group>
+              <group>
+                <field name="name" string="Referencia"/>
+                <field name="descripcion" string="Descripción Técnica"/>
+              </group>
+              <group>
+                <field name="precio" string="Precio"/>
+                <field name="cantidad" string="Cantidad"/>
+              </group>
+              </group>
+          </sheet>  
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

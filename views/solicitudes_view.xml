@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tree_solicitudes" model="ir.ui.view">
+      <field name="name">Lista de Solicitudes</field>
+      <field name="model">solicitud.solicitudes</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <tree decoration-success="state == 'aprobado'" decoration-danger="state == 'rechazado'" decoration-warning="state == 'solicitud'">
+          <field name="id" string="Id"/>
+          <field name="de" string="De"/>
+          <field name="para" string="Para"/>
+          <field name="fecha" string="Fecha"/>
+          <field name="fecha_ap" string="Aprobación"/>
+          <field name="fecha_re" string="Rechazo"/>
+          <field name="name" string="Asunto"/>
+          <field name="state" string="Estado"/>
+        </tree>
+      </field>
+    </record>
+
+    
+    <record id="view_form_solicitudes" model="ir.ui.view">
+      <field name="name">Formulario Solicitud de Memorandums</field>
+      <field name="model">solicitud.solicitudes</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="button_aprobado" string="Aprobar" states="solicitud" class="oe_highlight" type="object"/>
+            <button name="button_cancelar" string="Rechazar" states="solicitud" type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="solicitud,aprobado,rechazado"/>
+          </header>
+          <sheet>
+            <h2>Formulario Solicitud de Memorandums</h2>
+            <group>
+              <field name="de" string="De"/>
+              <field name="para" string="Para"/>
+              <field name="name" string="Asunto"/>
+              <field name="fecha" string="Fecha"/>
+              <field name="id_project" string="Proyecto"/>
+            </group> 
+            <group>
+              <field name="texto" string="Descripción"/>
+              <!--<field name="id_oc" string="Id OC"/>-->
+            </group> 
+              <!--<field name="activo" string="Activo"/>-->
+            <group>
+              <field name="items" string="Items"/>
+            </group>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+    <record id="action_solicitudes" model="ir.actions.act_window">
+        <field name="name">Accion de Solicitudes</field>
+        <field name="res_model">solicitud.solicitudes</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!--Filtra memorandums solo de o para el usurio logueado -->
+        <field name="domain">['|',('de','=',uid),('para','=',uid)]</field>
+    </record>
+<!--
+    <menuitem id="menu_solicitudes_config"
+        name="Solicitudes "
+        sequence="500"
+        parent="menu_memos"
+        groups="group_memorandum_user" />
+    
+    <menuitem id="menu_solicitud_solicitudes"
+        name="Solcitud Memorandum"
+        parent="menu_solicitudes_config"
+        action="action_solicitudes" />
+-->    
+    <menuitem id="menu_solicitudes_view"
+        name="Solicitud Memorandums"
+        sequence="100"
+        parent="menu_memorandums_config"
+        action="action_solicitudes"
+    />
+
+  </data>
+</odoo>

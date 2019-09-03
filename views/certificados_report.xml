@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report id='report_certificados_custom'
+            string='Imprimir Certificado'
+            model='certificado.certificados'
+            report_type='qweb-pdf'
+            name='memorandum.report_certificado_template'
+        />
+
+        <template id='report_certificado_template'>
+            
+            <!--<t t-name="memos.memorandum">-->
+                 
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="web.external_layout">
+                            
+                            <div class="page">
+
+                                    <p class="text-right">Coyhaique, <span t-field="o.fecha"/></p>
+                                    <h4 class="text-center font-weight-bold">Certificado de Disponibilidad Presupuestaria </h4>
+                                    <hr class="style7"/>
+                                    <!--<div class="jumbotron jumbotron-fluid bg-white">-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-xs-4">                                
+                                                    <p class="text-left font-weight-bold">Ejercicio Presupuestario Año</p>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <p class="text-left font-weight-bold"><span t-field="o.ano"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <p class="text-left font-weight-bold">Nº Certificado</p>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <p class="text-left font-weight-bold"><span t-field="o.id"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <p class="text-left font-weight-bold">Fecha</p>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <p class="text-left font-weight-bold"><span t-field="o.fecha"/></p>
+                                                </div>
+                                            </div>
+                                            <t t-if="o.id_memo">
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <p class="text-left font-weight-bold">Según Memorandum Nº</p>
+                                                    </div>
+                                                    <div class="col-xs-8">
+                                                        <p class="text-left font-weight-bold"><span t-field="o.id_memo.id"/>-<span t-field="o.id_memo"/></p>
+                                                    </div>
+                                                </div>
+                                            </t>                                
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <!--<p class="text-left font-weight-bold">Bien o Servicio</p>-->
+                                                    <p class="h4"><u>Bien o Servicio</u></p>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <!--<p class="text-left font-weight-bold"><span t-field="o.name"/></p>-->
+                                                    <p class="text-justify"><span t-field="o.name"/></p>
+                                                </div>
+                                            <!--<hr class="my-4"/>-->
+                                            </div>
+                                        </div>
+                                    <!--</div>-->
+                                
+                                <t t-if="o.items">
+                                    <!--<hr/>  -->
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Referencia</th>
+                                                <th class="text-right" scope="col">Cantidad</th>
+                                                <th scope="col">Descripción</th>
+                                                <th class="text-right" scope="col">Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.items" t-as="i">
+                                                
+                                                <tr>
+                                                    <td class="text-justify"><span t-field="i.name"/></td>
+                                                    <td class="text-right"><span t-field="i.cantidad"/></td>
+                                                    <td class="text-justify"><span t-field="i.descripcion"/></td>
+                                                    <td class="text-right"><span t-field="i.precio"/></td>
+                                                </tr>
+                                            </t>
+
+                                            <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Neto</td>
+                                                    <td class="text-right"><span t-field="o.neto"/></td>
+                                            </tr>
+                                            <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>IVA 19%</td>
+                                                    <td class="text-right"><span t-field="o.iva"/></td>
+                                            </tr>
+                                            <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Total</td>
+                                                    <td class="text-right"><span t-field="o.total"/></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>  
+                                </t>
+
+
+
+
+
+                                    <hr class="style7"/>
+                                    <p class="h4"><u>Impútese</u></p>
+                                    <p class="text-justify"><span t-field="o.imputacion"/></p>
+
+                                    
+                                    <hr class="style7"/>
+                                    <p class="h4"><u>Monto a Comprometer</u></p>
+                                  
+                                    <p class="text-justify"><span t-field="o.monto"/></p>
+
+                                    <hr class="style7"/>
+
+
+
+                                
+                               
+                            </div>
+                            <br/><br/><br/>
+                            <!--<t t-set="sql" t-value="o.sql_user()"/>-->
+                            <!--<div class="jumbotron jumbotron-fluid bg-white">-->
+                                <div class="container">
+                                    
+                                    <t t-set="usuario" t-value= "o.get_user(o.responsable)"/>
+                                    <t t-foreach="usuario" t-as="i">
+                                        <t t-set="name" t-value="i['nombre']"/>
+                                        <t t-set="depto" t-value="i['dpto']"/>
+                                        <t t-set="firma" t-value="i['firma']"/>
+                                        <center>
+                                            <div style="display:inline-block;">
+                                                <span style="width:100px; height:50px; text-align:center;" t-raw="firma"/>
+                                            </div>
+                                        </center>
+                                        <p class="text-center font-weight-bold text-uppercase">   <span t-esc="name"/>  </p>
+                                        <p class="text-center font-weight-bold ">   <span t-esc="depto"/>  </p>
+                                        <p class="text-center text-lowercaseld "><u>   <span t-esc="request.env.user.login"/></u></p>
+                                    </t>
+                                </div>
+                            <!--</div>-->
+                            <div class="footer">
+                                <p class="text-center">Universidad de Aysen Obispo Vielmo 62 Coyhaique</p>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            <!--</t>-->
+
+        <style>
+            #img {
+                display: block;
+                position: absolute;
+                width: 100px; 
+                height: 50px;
+                top: 0; bottom:0; left: 0; right:0;
+                margin: 0 auto;
+            }
+            #contentWrapper {
+                display: inline-block;
+                text-align: center;
+            }
+            hr.style7 {
+                border-top: 1px solid #8c8b8b;
+                border-bottom: 1px solid #fff;
+            }
+            .jumbotron.jumbotron-fluid.bg-white p{
+                font-size: 6px;
+            }
+        </style>
+            
+
+        </template>
+
+        <!--
+        def run_sql(self, qry):
+                self._cr.execute(qry)
+                _res = self._cr.dictfetchall()
+                return _res
+
+        -->
+
+    </data>
+</odoo>

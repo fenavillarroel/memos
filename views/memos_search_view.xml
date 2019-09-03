@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_filter_memorandums" model="ir.ui.view">
+            <field name="name">Memorandums Filter</field>
+            <field name="model">memos.memorandums</field>
+            <field name="arch" type="xml">
+                <search string="Memorandum Filtros Busqueda">
+                    <field name="id" string="id"/>
+                    <field name="name" string="Asunto"/>
+                    <field name="de" string="de"/>
+                    <field name="para" string="para"/>
+                    <field name="id_oc" string="Id Orden de Compra"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

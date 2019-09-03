@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tree_imputaciones" model="ir.ui.view">
+      <field name="name">Lista de Imputaciones</field>
+      <field name="model">certificado.imputaciones</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <tree colors="decoration-muted:activo==True">
+          <field name="id" string="Id Imputación"/>
+          <field name="name" string="Título Imputación"/>
+        </tree>
+      </field>
+    </record>
+
+    
+    <record id="view_form_imputaciones" model="ir.ui.view">
+      <field name="name">Formulario de Imputaciones</field>
+      <field name="model">certificado.imputaciones</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <h2>Formulario Imputaciones</h2>
+            <group>
+                <field name="name" string="Título Imputación"/>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="action_imputaciones" model="ir.actions.act_window">
+        <field name="name">Accion de Imputaciones</field>
+        <field name="res_model">certificado.imputaciones</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_imputaciones_config"
+        name="Configuración"
+        sequence="300"
+        parent="menu_memos"
+        groups="group_memorandum_user" />
+    <!-- Third level menu items -->
+    <menuitem id="menu_certificados_imputaciones"
+        name="Imputaciones"
+        parent="menu_imputaciones_config"
+        action="action_imputaciones" />
+
+    <!--<menuitem id="menu_certificados" name="Certificados" action="action_certificados"/>-->
+
+  </data>
+</odoo>

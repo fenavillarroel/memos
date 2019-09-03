@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report id='report_memos_custom'
+            string='Imprimir Memorandum'
+            model='memos.memorandums'
+            report_type='qweb-pdf'
+            name='memorandum.report_memorandum_template'
+        />
+
+        <template id='report_memorandum_template'>
+            
+            <!--<t t-name="memos.memorandum">-->
+                 
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="web.external_layout">
+                            
+                            <div class="page">
+
+                                    <p class="text-right">Coyhaique, <span t-field="o.fecha"/></p>
+                                    <h2 class="text-center font-weight-bold">Memorandum # <span t-field="o.id"/></h2>
+                                    <hr class="style7"/>
+                                    <!--<div class="jumbotron jumbotron-fluid bg-white">-->
+                                        <div class="container">
+                                            <t t-if="o.id_oc">
+                                                <div class="row">
+                                                    <div class="col-xs-2">                                
+                                                        <p class="text-left font-weight-bold">Orden de Compra</p>
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        <p class="text-left font-weight-bold"><span t-field="o.id_oc"/></p>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <div class="row">
+                                                <div class="col-xs-2">                                
+                                                    <p class="text-left font-weight-bold">DE</p>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <p class="text-left font-weight-bold"><span t-field="o.de"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p class="text-left font-weight-bold">PARA</p>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <p class="text-left font-weight-bold"><span t-field="o.para"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p class="text-left font-weight-bold">ASUNTO</p>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <p class="text-left font-weight-bold"><span t-field="o.name"/></p>
+                                                </div>
+                                            <!--<hr class="my-4"/>-->
+                                            </div>
+                                             <t t-if="o.id_project">
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <p class="text-left font-weight-bold">Proyecto</p>
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        <p class="text-left font-weight-bold"><span t-field="o.id_project"/></p>
+                                                    </div>
+                                                <!--<hr class="my-4"/>-->
+                                                </div>
+                                            </t>
+
+
+
+                                        </div>
+                                    <!--</div>-->
+                                    <hr class="style7"/>
+                                    
+                                    <p class="text-justify"><span t-field="o.texto"/></p>
+
+                                    <hr class="style7"/>
+                                <!--<h2>Memorandums</h2>
+                                <p>Usuario <span t-esc="request.env.user.login"/></p>
+                                <t t-set="mail" t-value="request.env.user.login"/>-->
+                                
+                                <t t-if="o.items">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Producto o Servicio</th>
+                                                <th scope="col">Cantidad</th>
+                                                <th scope="col">Id Convenio Marco</th>
+                                                <th scope="col">Descripción</th>
+                                                <th scope="col">Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.items" t-as="i">
+                                                
+                                                <tr>
+                                                    <td><span t-field="i.name"/></td>
+                                                    <td><span t-field="i.cantidad"/></td>
+                                                    <td><span t-field="i.id_convenio"/></td>
+                                                    <td><span t-field="i.descripcion"/></td>
+                                                    <td><span t-field="i.precio"/></td>
+                                                </tr>
+                                            </t>
+
+                                        </tbody>
+                                    </table>  
+                                </t>
+
+
+                                <t t-if="o.anotacion">
+                                            <hr class="style7"/>
+                                            <p class="h4">Anotaciones</p>
+                                            <t t-foreach="o.anotacion" t-as="i">
+
+                                            <div class="row">
+                                                <div class="col-xs-2">                                
+                                                    <p class="text-left font-weight-bold">Anotación</p>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <p class="text-left font-weight-bold"><span t-field="i.name"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p class="text-left font-weight-bold">Fecha</p>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <p class="text-left font-weight-bold"><span t-field="i.fecha"/></p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <p class="text-left font-weight-bold">Descripción</p>
+                                                </div>
+                                                <div class="col-xs-10">
+
+
+                                                    <p class="text-left font-weight-bold"><span t-field="i.texto"/></p>
+                                                </div>
+                                            </div>
+
+                                            </t>
+                                            <hr class="style7"/>
+                                </t>
+
+
+                               
+                            </div>
+                            <br/><br/><br/><br/><br/><br/>
+                            <!--<t t-set="sql" t-value="o.sql_user()"/>-->
+                            <!--<div class="jumbotron jumbotron-fluid bg-white">-->
+                                <div class="container">
+
+                                    <t t-set="usuario" t-value= "o.sql_user()"/>
+                                    <t t-foreach="usuario" t-as="i">
+                                        <t t-set="name" t-value="i['nombre']"/>
+                                        <t t-set="depto" t-value="i['dpto']"/>
+                                        <t t-set="firma" t-value="i['firma']"/>
+                                        <center>
+                                            <div style="display:inline-block;">
+                                                <span style="width:100px; height:50px; text-align:center;" t-raw="firma"/>
+                                            </div>
+                                        </center>
+                                        <p class="text-center font-weight-bold text-uppercase">   <span t-esc="name"/>  </p>
+                                        <p class="text-center font-weight-bold ">   <span t-esc="depto"/>  </p>
+                                        <p class="text-center text-lowercaseld ">   <span t-esc="request.env.user.login"/></p>
+                                    </t>
+                                </div>
+                            <!--</div>-->
+                            <div class="footer">
+                                <p class="text-center">Universidad de Aysen Obispo Vielmo 62 Coyhaique</p>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            <!--</t>-->
+
+        <style>
+            hr.style7 {
+                border-top: 1px solid #8c8b8b;
+                border-bottom: 1px solid #fff;
+            }
+            .jumbotron.jumbotron-fluid.bg-white p{
+                font-size: 6px;
+            }
+        </style>
+            
+
+        </template>
+
+        <!--
+        def run_sql(self, qry):
+                self._cr.execute(qry)
+                _res = self._cr.dictfetchall()
+                return _res
+
+        -->
+
+    </data>
+</odoo>
+
+
+
+

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tree_certificados" model="ir.ui.view">
+      <field name="name">Lista de Certificados</field>
+      <field name="model">certificado.certificados</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <tree decoration-success="state == 'aprobado'" decoration-danger="state == 'emitido'" decoration-warning="state == 'borrador'">
+          <field name="name" string="Bien o servicio"/>
+          <field name="fecha" string="fecha"/>
+          <field name="id" string="id Certificado"/>
+          <field name="id_memo" string="Id Memo"/>
+          <field name="state" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+
+    
+    <record id="view_form_certificado" model="ir.ui.view">
+      <field name="name">Formulario de Certificados</field>
+      <field name="model">certificado.certificados</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="button_emitido" string="Emitido" states="borrador" class="oe_highlight" type="object"/>
+            <button name="button_aprobado" string="Aprobado" states="emitido" class="oe_highlight" type="object"/>
+            <button name="button_borrador" string="Borrador" states="emitido" type="object"/>
+            <field name="state" widget="statusbar" statusbar_visible="borrador,emitido,aprobado"/>
+          </header>
+
+          <sheet>
+          <h2>Formulario Certificado de Disponibilidad Presupuestaria</h2>
+            <group>
+              <group>
+                <field name="ano" string="Año Presupuestario"/>
+                <field name="fecha" string="Fecha"/>
+              </group>
+              <group>
+                <field name="id_memo" string="Id Memorandum"/>
+                 <field name="responsable" string="Responsable"/>
+              </group>
+            </group>
+            <group>
+              <field name="name" string="Bien o Servicio"/>
+            </group> 
+                <!--<group name="group_top">-->
+
+                  
+            
+            <field name="items" string="Items Certificado"/>
+                  
+                    
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="neto"  string="Neto"/>
+                        <field name="iva"  string="IVA"/>
+                        <div class="oe_subtotal_footer_separator oe_inline">
+                          <label for="total"/>
+                        </div>  
+                        <field name="total" nolabel="1" class="oe_subtotal_footer_separator" />
+                        
+                    </group>
+                    
+            <group>
+            
+              <field name="imputacion" string="Impútese"/>
+              <!--<field name="id_oc" string="Id OC"/>-->
+            </group> 
+              <!--<field name="activo" string="Activo"/>-->
+            <group>
+              <field name="monto" string="Monto"/>
+            </group>
+
+
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_certificados" model="ir.actions.act_window">
+        <field name="name">Accion de Certificados</field>
+        <field name="res_model">certificado.certificados</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+
+    </record>
+
+    <menuitem id="menu_certificados_config"
+        name="Certificados "
+        sequence="200"
+        parent="menu_memos"
+        groups="group_memorandum_user" />
+    <!-- Third level menu items -->
+    <menuitem id="menu_certificados_certificados"
+        name="Certificado Disponibilidad Presupuestaria"
+        parent="menu_certificados_config"
+        action="action_certificados" />
+
+
+
+  </data>
+</odoo>
